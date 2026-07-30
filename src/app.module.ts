@@ -15,6 +15,7 @@ import { Onu } from './entities/onu/onu';
 import { Pep } from './entities/pep/pep';
 import { Sentenciados } from './entities/sentenciados/sentenciados';
 import { ScraperControllerController } from './controllers/scraper-controller/scraper-controller.controller';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { ScraperControllerController } from './controllers/scraper-controller/sc
       Sentenciados]),
   ],
   // 3. REGÍSTRALOS AQUÍ
-  controllers: [ScraperController, JudicialController, InterpolController, FiscaliaController, HomonimoController
+  controllers: [AppController,ScraperController, JudicialController, InterpolController, FiscaliaController, HomonimoController
     ,ScraperControllerController
   ],
   providers: [ScraperService, DatabaseService],
