@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import axios from 'axios';
-import { chromium, Page, Locator } from 'playwright';
+import { chromium, Page, Locator, Browser } from 'playwright';
 
 @Injectable()
 export class ScraperService {
@@ -79,6 +79,7 @@ export class ScraperService {
   criterio: string,
   tipoConsulta: number | string,
 ) {
+  let browser: Browser | null = null;
   const tipo = Number(tipoConsulta);
 
   const criterioNormalizado =
@@ -104,11 +105,21 @@ export class ScraperService {
     };
   }
 
-  const browser = await chromium.launch({
+   browser = await chromium.launch({
     headless: true,
+    args: [
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+    ],
   });
 
   const context = await browser.newContext({
+    viewport: {
+      width: 1366,
+      height: 768,
+    },
     userAgent:
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
       'AppleWebKit/537.36 (KHTML, like Gecko) ' +
